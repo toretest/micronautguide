@@ -1,5 +1,9 @@
 # doc
 
+##
+
+http://localhost:8080/swagger-ui#/default/addLocation
+
 https://github.com/aws/neptune-gremlin-client
 
 ## Janusgraph docker
@@ -44,7 +48,7 @@ val result = client.submit("g.V().count()")
         .addContactPoint(endpoint)
         .port(8182)
         .enableSsl(false) // Ensure SSL is correctly set
-        .serializer(GraphSONMessageSerializerV1()) // Switch to GraphSON
+        .serializer(GraphSONMessageSerializerV3()) // Switch to GraphSON
         .create()
 
     private val client: Client = cluster.connect()

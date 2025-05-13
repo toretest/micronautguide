@@ -33,6 +33,9 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
     testImplementation("io.micronaut:micronaut-http-client")
+
+    implementation("org.apache.tinkerpop:gremlin-driver:3.7.3")
+    implementation("org.apache.tinkerpop:tinkergraph-gremlin:3.7.3")
 }
 
 
