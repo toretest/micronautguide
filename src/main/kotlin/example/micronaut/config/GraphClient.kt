@@ -4,6 +4,6 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSo
 import org.apache.tinkerpop.gremlin.structure.Graph
 
 interface GraphClient {
-    fun getGraph(): Graph
+    fun graph(): Graph
     fun g(): GraphTraversalSource
 }

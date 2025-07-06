@@ -12,6 +12,6 @@ class InMemoryGraphClient : GraphClient {
     private val graph: Graph = TinkerGraph.open()
     private val g: GraphTraversalSource = graph.traversal()
 
-    override fun getGraph(): Graph = graph
+    override fun graph(): Graph = graph
     override fun g(): GraphTraversalSource = g
 }

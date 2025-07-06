@@ -11,8 +11,8 @@ import org.apache.tinkerpop.gremlin.process.traversal.AnonymousTraversalSource
 import org.apache.tinkerpop.gremlin.util.ser.GraphSONMessageSerializerV3
 
 @Singleton
-@Requires(property = "gremlin.mode", value = "remote")
-class RemoteGraphClient(
+@Requires(property = "gremlin.mode", value = "gvdot")
+class RemoteGvdotGraphClient(
     @Value("\${gremlin.endpoint}") private val endpoint: String
 ) : GraphClient {
 
@@ -20,7 +20,7 @@ class RemoteGraphClient(
 
     private val cluster = Cluster.build(endpoint)
         //.addContactPoint(endpoint)
-        .port(8182)
+        .port(9182)
         //.enableSsl(false)
         //.serializer(GraphSONMessageSerializerV1())
         .serializer(GraphSONMessageSerializerV3())

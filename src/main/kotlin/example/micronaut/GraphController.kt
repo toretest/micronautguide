@@ -15,8 +15,9 @@ class GraphController(private val graphService: GraphService) {
     }
 
     @Post("/vertices/post/person")
-    fun postVertexPerson(): HttpResponse<Any> {
-        val count = graphService.addPerson(name = "John", age = "42")
+    fun postVertexPerson(person : Person): HttpResponse<Any> {
+        val count = graphService.addPerson(name = person.name, age = person.age,  pnr = person.pnr)
         return HttpResponse.ok(count)
     }
 }
+
