@@ -1,4 +1,10 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal() // Default Gradle Plugin Portal
+        mavenCentral()       // Official Maven Central repository
+        maven { url "https://s01.oss.sonatype.org/content/repositories/releases/" } // Sonatype releases
+        maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" } // Sonatype snapshots (for development versions)
+    }
+}
 
-
-rootProject.name="micronautguide"
-
+rootProject.name = "micronautguide"

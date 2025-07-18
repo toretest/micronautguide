@@ -1,14 +1,19 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.9.25"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.9.25"
+    id("org.jetbrains.kotlin.jvm") version "2.2.0"
+    id("org.jetbrains.kotlin.plugin.allopen") version "2.2.0"
     id("com.google.devtools.ksp") version "1.9.25-1.0.20"
-    id("io.micronaut.application") version "4.5.0"
+    id("io.micronaut.application") version "4.5.4"  // Ensure no direct dependency in case of resolution issues
     id("com.gradleup.shadow") version "8.3.6"
-    id("io.micronaut.aot") version "4.5.0"
+    id("io.micronaut.aot") version "4.5.4"
 }
+
 
 version = "0.1"
 group = "example.micronaut"
+
+kotlin {
+    jvmToolchain(21) // Use JDK 21 for the Kotlin compiler toolchain
+}
 
 repositories {
     mavenCentral()
@@ -18,47 +23,55 @@ dependencies {
     annotationProcessor("io.micronaut.openapi:micronaut-openapi")
     implementation("io.micronaut.openapi:micronaut-openapi-annotations")
 
+    // Kotlin symbol processing (KSP) dependencies
     ksp("io.micronaut:micronaut-http-validation")
     ksp("io.micronaut.openapi:micronaut-openapi")
     ksp("io.micronaut.serde:micronaut-serde-processor")
     ksp("io.micronaut.validation:micronaut-validation-processor")
+
+    // Micronaut and Kotlin runtime dependencies
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
     implementation("io.micronaut.validation:micronaut-validation")
     implementation("jakarta.validation:jakarta.validation-api")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+
+    // Micronaut OpenAPI and additional dependencies
     compileOnly("io.micronaut:micronaut-http-client")
     compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
-    runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
-    testImplementation("io.micronaut:micronaut-http-client")
+    runtimeOnly("ch.qos.logback:logback-classic")
 
+    // GraphDB libraries (Apache TinkerPop)
     implementation("org.apache.tinkerpop:gremlin-driver:3.7.3")
     implementation("org.apache.tinkerpop:tinkergraph-gremlin:3.7.3")
-}
 
+    // Test dependencies
+    testImplementation("io.micronaut:micronaut-http-client")
+}
 
 application {
-    mainClass = "example.micronaut.ApplicationKt"
+    mainClass = "example.micronaut.Application"
 }
+
 java {
     sourceCompatibility = JavaVersion.toVersion("21")
+    targetCompatibility = JavaVersion.toVersion("21")
 }
 
-
-graalvmNative.toolchainDetection = false
+graalvmNative {
+    toolchainDetection = false
+}
 
 micronaut {
-    runtime("netty")
+    runtime("netty") // Specify Netty runtime
     testRuntime("junit5")
     processing {
         incremental(true)
         annotations("example.micronaut.*")
     }
     aot {
-        // Please review carefully the optimizations enabled below
-        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
         optimizeServiceLoading = false
         convertYamlToJava = false
         precomputeOperations = true
@@ -70,9 +83,6 @@ micronaut {
     }
 }
 
-
 tasks.named("dockerfileNative") {
-    jdkVersion = "21"
+    jdkVersion = "21" // Ensure Java 21 is used for Docker native builds
 }
-
-

@@ -1,8 +1,5 @@
 package example.micronaut
 
-import io.micronaut.runtime.Micronaut.run
-import io.swagger.v3.oas.annotations.*
-import io.swagger.v3.oas.annotations.info.*
 
 @OpenAPIDefinition(
     info = Info(
@@ -10,8 +7,8 @@ import io.swagger.v3.oas.annotations.info.*
             version = "0.0"
     )
 )
-object Api {
-}
+/*object Api {
+}*/
 fun main(args: Array<String>) {
 	run(*args)
 }
